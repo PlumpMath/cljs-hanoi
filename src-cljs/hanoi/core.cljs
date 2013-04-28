@@ -1,6 +1,7 @@
 (ns hanoi.core
   (:use [hanoi.repl :only [connect]]
-        [hanoi.stack :only [sched simulation-loop]]))
+        [hanoi.stack :only [sched simulation-loop]])
+  (:require [crate.core :as crate]))
 
 
 ; fire up a repl for the browser and eval namespace on top once connected

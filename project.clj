@@ -1,11 +1,13 @@
-(defproject cljs-snake "0.0.1"
-  :description "A port of snake to ClojureScript."
+(defproject cljs-hanoi "0.0.1"
+  :description "A port of hanoi to ClojureScript."
   :source-paths ["src-clj"]
-  :license {:name "Unknown/Public domain(?)"}
+  :license {:name "Eclipse Public License 1.0"}
   :dependencies [[org.clojure/clojure "1.5.1"]
                  [compojure "1.1.5"]
                  [ring/ring-jetty-adapter "1.1.0"]
                  [com.cemerick/piggieback "0.0.4"]
+                 [crate "0.2.4"]
+                 [jayq "2.3.0"]
                  [hiccup "1.0.2"]]
   :plugins [[lein-cljsbuild "0.3.0"]
             [lein-ring "0.8.3"]]
@@ -73,4 +75,4 @@
        :compiler {:output-to "resources/private/js/unit-test.js"
                   :optimizations :whitespace
                   :pretty-print true}}}}
-  :ring {:handler snake.routes/app})
+  :ring {:handler hanoi.routes/app})

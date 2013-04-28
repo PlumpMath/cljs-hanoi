@@ -29021,771 +29021,109 @@ clojure.browser.repl.connect = function connect(repl_server_url) {
     return iframe.style.display = "none"
   })
 };
-goog.provide("snake.repl");
+goog.provide("hanoi.repl");
 goog.require("cljs.core");
 goog.require("clojure.browser.repl");
-snake.repl.connect = function connect() {
+hanoi.repl.connect = function connect() {
   return clojure.browser.repl.connect.call(null, "http://localhost:9009/repl")
 };
-goog.exportSymbol("snake.repl.connect", snake.repl.connect);
-goog.provide("snake.core");
+goog.exportSymbol("hanoi.repl.connect", hanoi.repl.connect);
+goog.provide("hanoi.stack");
 goog.require("cljs.core");
-goog.require("snake.repl");
-goog.require("snake.repl");
-snake.core.say_hello = function say_hello() {
-  return alert("Hello from cljs-snake!")
-};
-goog.exportSymbol("snake.core.say_hello", snake.core.say_hello);
-snake.core.panel_canvas_id = "snake";
-goog.provide("snake.core.cell_record");
-snake.core.cell_record = function(x, y, __meta, __extmap) {
-  this.x = x;
-  this.y = y;
-  this.__meta = __meta;
-  this.__extmap = __extmap;
-  this.cljs$lang$protocol_mask$partition1$ = 0;
-  this.cljs$lang$protocol_mask$partition0$ = 2229667594;
-  if(arguments.length > 2) {
-    this.__meta = __meta;
-    this.__extmap = __extmap
-  }else {
-    this.__meta = null;
-    this.__extmap = null
-  }
-};
-snake.core.cell_record.prototype.cljs$core$IHash$_hash$arity$1 = function(this__2467__auto__) {
-  var self__ = this;
-  var h__2335__auto__ = self__.__hash;
-  if(!(h__2335__auto__ == null)) {
-    return h__2335__auto__
-  }else {
-    var h__2335__auto____$1 = cljs.core.hash_imap.call(null, this__2467__auto__);
-    self__.__hash = h__2335__auto____$1;
-    return h__2335__auto____$1
-  }
-};
-snake.core.cell_record.prototype.cljs$core$ILookup$_lookup$arity$2 = function(this__2472__auto__, k__2473__auto__) {
-  var self__ = this;
-  return this__2472__auto__.cljs$core$ILookup$_lookup$arity$3(this__2472__auto__, k__2473__auto__, null)
-};
-snake.core.cell_record.prototype.cljs$core$ILookup$_lookup$arity$3 = function(this__2474__auto__, k2945, else__2475__auto__) {
-  var self__ = this;
-  if(k2945 === "\ufdd0:x") {
-    return self__.x
-  }else {
-    if(k2945 === "\ufdd0:y") {
-      return self__.y
-    }else {
-      if("\ufdd0:else") {
-        return cljs.core._lookup.call(null, self__.__extmap, k2945, else__2475__auto__)
-      }else {
-        return null
-      }
-    }
-  }
-};
-snake.core.cell_record.prototype.cljs$core$IAssociative$_assoc$arity$3 = function(this__2479__auto__, k__2480__auto__, G__2944) {
-  var self__ = this;
-  var pred__2947 = cljs.core.identical_QMARK_;
-  var expr__2948 = k__2480__auto__;
-  if(pred__2947.call(null, "\ufdd0:x", expr__2948)) {
-    return new snake.core.cell_record(G__2944, self__.y, self__.__meta, self__.__extmap, null)
-  }else {
-    if(pred__2947.call(null, "\ufdd0:y", expr__2948)) {
-      return new snake.core.cell_record(self__.x, G__2944, self__.__meta, self__.__extmap, null)
-    }else {
-      return new snake.core.cell_record(self__.x, self__.y, self__.__meta, cljs.core.assoc.call(null, self__.__extmap, k__2480__auto__, G__2944), null)
-    }
-  }
-};
-snake.core.cell_record.prototype.cljs$core$IPrintWithWriter$_pr_writer$arity$3 = function(this__2486__auto__, writer__2487__auto__, opts__2488__auto__) {
-  var self__ = this;
-  var pr_pair__2489__auto__ = function(keyval__2490__auto__) {
-    return cljs.core.pr_sequential_writer.call(null, writer__2487__auto__, cljs.core.pr_writer, "", " ", "", opts__2488__auto__, keyval__2490__auto__)
+hanoi.stack.stack = cljs.core.atom.call(null, cljs.core.List.EMPTY);
+hanoi.stack.sched = function() {
+  var sched__delegate = function(fns) {
+    return cljs.core.doall.call(null, cljs.core.map.call(null, function(p1__2944_SHARP_) {
+      return cljs.core.swap_BANG_.call(null, hanoi.stack.stack, cljs.core.partial.call(null, cljs.core.cons, p1__2944_SHARP_))
+    }, cljs.core.reverse.call(null, fns)))
   };
-  return cljs.core.pr_sequential_writer.call(null, writer__2487__auto__, pr_pair__2489__auto__, [cljs.core.str("#"), cljs.core.str("cell-record"), cljs.core.str("{")].join(""), ", ", "}", opts__2488__auto__, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0:x", self__.x), cljs.core.vector.call(null, "\ufdd0:y", self__.y)], true), self__.__extmap))
-};
-snake.core.cell_record.prototype.cljs$core$ICollection$_conj$arity$2 = function(this__2477__auto__, entry__2478__auto__) {
-  var self__ = this;
-  if(cljs.core.vector_QMARK_.call(null, entry__2478__auto__)) {
-    return this__2477__auto__.cljs$core$IAssociative$_assoc$arity$3(this__2477__auto__, cljs.core._nth.call(null, entry__2478__auto__, 0), cljs.core._nth.call(null, entry__2478__auto__, 1))
-  }else {
-    return cljs.core.reduce.call(null, cljs.core._conj, this__2477__auto__, entry__2478__auto__)
-  }
-};
-snake.core.cell_record.prototype.cljs$core$ISeqable$_seq$arity$1 = function(this__2484__auto__) {
-  var self__ = this;
-  return cljs.core.seq.call(null, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0:x", self__.x), cljs.core.vector.call(null, "\ufdd0:y", self__.y)], true), self__.__extmap))
-};
-snake.core.cell_record.prototype.cljs$core$ICounted$_count$arity$1 = function(this__2476__auto__) {
-  var self__ = this;
-  return 2 + cljs.core.count.call(null, self__.__extmap)
-};
-snake.core.cell_record.prototype.cljs$core$IEquiv$_equiv$arity$2 = function(this__2468__auto__, other__2469__auto__) {
-  var self__ = this;
-  if(cljs.core.truth_(function() {
-    var and__3941__auto__ = other__2469__auto__;
-    if(cljs.core.truth_(and__3941__auto__)) {
-      var and__3941__auto____$1 = this__2468__auto__.constructor === other__2469__auto__.constructor;
-      if(and__3941__auto____$1) {
-        return cljs.core.equiv_map.call(null, this__2468__auto__, other__2469__auto__)
-      }else {
-        return and__3941__auto____$1
-      }
-    }else {
-      return and__3941__auto__
+  var sched = function(var_args) {
+    var fns = null;
+    if(goog.isDef(var_args)) {
+      fns = cljs.core.array_seq(Array.prototype.slice.call(arguments, 0), 0)
     }
-  }())) {
-    return true
-  }else {
-    return false
-  }
-};
-snake.core.cell_record.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(this__2471__auto__, G__2944) {
-  var self__ = this;
-  return new snake.core.cell_record(self__.x, self__.y, G__2944, self__.__extmap, self__.__hash)
-};
-snake.core.cell_record.prototype.cljs$core$IMeta$_meta$arity$1 = function(this__2470__auto__) {
-  var self__ = this;
-  return self__.__meta
-};
-snake.core.cell_record.prototype.cljs$core$IMap$_dissoc$arity$2 = function(this__2481__auto__, k__2482__auto__) {
-  var self__ = this;
-  if(cljs.core.contains_QMARK_.call(null, cljs.core.PersistentHashSet.fromArray(["\ufdd0:y", "\ufdd0:x"]), k__2482__auto__)) {
-    return cljs.core.dissoc.call(null, cljs.core.with_meta.call(null, cljs.core.into.call(null, cljs.core.ObjMap.EMPTY, this__2481__auto__), self__.__meta), k__2482__auto__)
-  }else {
-    return new snake.core.cell_record(self__.x, self__.y, self__.__meta, cljs.core.not_empty.call(null, cljs.core.dissoc.call(null, self__.__extmap, k__2482__auto__)), null)
-  }
-};
-snake.core.cell_record.cljs$lang$type = true;
-snake.core.cell_record.cljs$lang$ctorPrSeq = function(this__2507__auto__) {
-  return cljs.core.list.call(null, "snake.core/cell-record")
-};
-snake.core.cell_record.cljs$lang$ctorPrWriter = function(this__2507__auto__, writer__2508__auto__) {
-  return cljs.core._write.call(null, writer__2508__auto__, "snake.core/cell-record")
-};
-snake.core.__GT_cell_record = function __GT_cell_record(x, y) {
-  return new snake.core.cell_record(x, y)
-};
-snake.core.map__GT_cell_record = function map__GT_cell_record(G__2946) {
-  return new snake.core.cell_record((new cljs.core.Keyword("\ufdd0:x")).call(null, G__2946), (new cljs.core.Keyword("\ufdd0:y")).call(null, G__2946), null, cljs.core.dissoc.call(null, G__2946, "\ufdd0:x", "\ufdd0:y"))
-};
-goog.provide("snake.core.snake_record");
-snake.core.snake_record = function(body, direction, __meta, __extmap) {
-  this.body = body;
-  this.direction = direction;
-  this.__meta = __meta;
-  this.__extmap = __extmap;
-  this.cljs$lang$protocol_mask$partition1$ = 0;
-  this.cljs$lang$protocol_mask$partition0$ = 2229667594;
-  if(arguments.length > 2) {
-    this.__meta = __meta;
-    this.__extmap = __extmap
-  }else {
-    this.__meta = null;
-    this.__extmap = null
-  }
-};
-snake.core.snake_record.prototype.cljs$core$IHash$_hash$arity$1 = function(this__2467__auto__) {
-  var self__ = this;
-  var h__2335__auto__ = self__.__hash;
-  if(!(h__2335__auto__ == null)) {
-    return h__2335__auto__
-  }else {
-    var h__2335__auto____$1 = cljs.core.hash_imap.call(null, this__2467__auto__);
-    self__.__hash = h__2335__auto____$1;
-    return h__2335__auto____$1
-  }
-};
-snake.core.snake_record.prototype.cljs$core$ILookup$_lookup$arity$2 = function(this__2472__auto__, k__2473__auto__) {
-  var self__ = this;
-  return this__2472__auto__.cljs$core$ILookup$_lookup$arity$3(this__2472__auto__, k__2473__auto__, null)
-};
-snake.core.snake_record.prototype.cljs$core$ILookup$_lookup$arity$3 = function(this__2474__auto__, k2951, else__2475__auto__) {
-  var self__ = this;
-  if(k2951 === "\ufdd0:body") {
-    return self__.body
-  }else {
-    if(k2951 === "\ufdd0:direction") {
-      return self__.direction
-    }else {
-      if("\ufdd0:else") {
-        return cljs.core._lookup.call(null, self__.__extmap, k2951, else__2475__auto__)
-      }else {
-        return null
-      }
-    }
-  }
-};
-snake.core.snake_record.prototype.cljs$core$IAssociative$_assoc$arity$3 = function(this__2479__auto__, k__2480__auto__, G__2950) {
-  var self__ = this;
-  var pred__2953 = cljs.core.identical_QMARK_;
-  var expr__2954 = k__2480__auto__;
-  if(pred__2953.call(null, "\ufdd0:body", expr__2954)) {
-    return new snake.core.snake_record(G__2950, self__.direction, self__.__meta, self__.__extmap, null)
-  }else {
-    if(pred__2953.call(null, "\ufdd0:direction", expr__2954)) {
-      return new snake.core.snake_record(self__.body, G__2950, self__.__meta, self__.__extmap, null)
-    }else {
-      return new snake.core.snake_record(self__.body, self__.direction, self__.__meta, cljs.core.assoc.call(null, self__.__extmap, k__2480__auto__, G__2950), null)
-    }
-  }
-};
-snake.core.snake_record.prototype.cljs$core$IPrintWithWriter$_pr_writer$arity$3 = function(this__2486__auto__, writer__2487__auto__, opts__2488__auto__) {
-  var self__ = this;
-  var pr_pair__2489__auto__ = function(keyval__2490__auto__) {
-    return cljs.core.pr_sequential_writer.call(null, writer__2487__auto__, cljs.core.pr_writer, "", " ", "", opts__2488__auto__, keyval__2490__auto__)
+    return sched__delegate.call(this, fns)
   };
-  return cljs.core.pr_sequential_writer.call(null, writer__2487__auto__, pr_pair__2489__auto__, [cljs.core.str("#"), cljs.core.str("snake-record"), cljs.core.str("{")].join(""), ", ", "}", opts__2488__auto__, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0:body", self__.body), cljs.core.vector.call(null, "\ufdd0:direction", self__.direction)], true), self__.__extmap))
-};
-snake.core.snake_record.prototype.cljs$core$ICollection$_conj$arity$2 = function(this__2477__auto__, entry__2478__auto__) {
-  var self__ = this;
-  if(cljs.core.vector_QMARK_.call(null, entry__2478__auto__)) {
-    return this__2477__auto__.cljs$core$IAssociative$_assoc$arity$3(this__2477__auto__, cljs.core._nth.call(null, entry__2478__auto__, 0), cljs.core._nth.call(null, entry__2478__auto__, 1))
-  }else {
-    return cljs.core.reduce.call(null, cljs.core._conj, this__2477__auto__, entry__2478__auto__)
-  }
-};
-snake.core.snake_record.prototype.cljs$core$ISeqable$_seq$arity$1 = function(this__2484__auto__) {
-  var self__ = this;
-  return cljs.core.seq.call(null, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0:body", self__.body), cljs.core.vector.call(null, "\ufdd0:direction", self__.direction)], true), self__.__extmap))
-};
-snake.core.snake_record.prototype.cljs$core$ICounted$_count$arity$1 = function(this__2476__auto__) {
-  var self__ = this;
-  return 2 + cljs.core.count.call(null, self__.__extmap)
-};
-snake.core.snake_record.prototype.cljs$core$IEquiv$_equiv$arity$2 = function(this__2468__auto__, other__2469__auto__) {
-  var self__ = this;
-  if(cljs.core.truth_(function() {
-    var and__3941__auto__ = other__2469__auto__;
-    if(cljs.core.truth_(and__3941__auto__)) {
-      var and__3941__auto____$1 = this__2468__auto__.constructor === other__2469__auto__.constructor;
-      if(and__3941__auto____$1) {
-        return cljs.core.equiv_map.call(null, this__2468__auto__, other__2469__auto__)
-      }else {
-        return and__3941__auto____$1
-      }
-    }else {
-      return and__3941__auto__
-    }
-  }())) {
-    return true
-  }else {
-    return false
-  }
-};
-snake.core.snake_record.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(this__2471__auto__, G__2950) {
-  var self__ = this;
-  return new snake.core.snake_record(self__.body, self__.direction, G__2950, self__.__extmap, self__.__hash)
-};
-snake.core.snake_record.prototype.cljs$core$IMeta$_meta$arity$1 = function(this__2470__auto__) {
-  var self__ = this;
-  return self__.__meta
-};
-snake.core.snake_record.prototype.cljs$core$IMap$_dissoc$arity$2 = function(this__2481__auto__, k__2482__auto__) {
-  var self__ = this;
-  if(cljs.core.contains_QMARK_.call(null, cljs.core.PersistentHashSet.fromArray(["\ufdd0:direction", "\ufdd0:body"]), k__2482__auto__)) {
-    return cljs.core.dissoc.call(null, cljs.core.with_meta.call(null, cljs.core.into.call(null, cljs.core.ObjMap.EMPTY, this__2481__auto__), self__.__meta), k__2482__auto__)
-  }else {
-    return new snake.core.snake_record(self__.body, self__.direction, self__.__meta, cljs.core.not_empty.call(null, cljs.core.dissoc.call(null, self__.__extmap, k__2482__auto__)), null)
-  }
-};
-snake.core.snake_record.cljs$lang$type = true;
-snake.core.snake_record.cljs$lang$ctorPrSeq = function(this__2507__auto__) {
-  return cljs.core.list.call(null, "snake.core/snake-record")
-};
-snake.core.snake_record.cljs$lang$ctorPrWriter = function(this__2507__auto__, writer__2508__auto__) {
-  return cljs.core._write.call(null, writer__2508__auto__, "snake.core/snake-record")
-};
-snake.core.__GT_snake_record = function __GT_snake_record(body, direction) {
-  return new snake.core.snake_record(body, direction)
-};
-snake.core.map__GT_snake_record = function map__GT_snake_record(G__2952) {
-  return new snake.core.snake_record((new cljs.core.Keyword("\ufdd0:body")).call(null, G__2952), (new cljs.core.Keyword("\ufdd0:direction")).call(null, G__2952), null, cljs.core.dissoc.call(null, G__2952, "\ufdd0:body", "\ufdd0:direction"))
-};
-goog.provide("snake.core.game_record");
-snake.core.game_record = function(panel, cell_size, length_to_win, ms_per_move, apple, snake, __meta, __extmap) {
-  this.panel = panel;
-  this.cell_size = cell_size;
-  this.length_to_win = length_to_win;
-  this.ms_per_move = ms_per_move;
-  this.apple = apple;
-  this.snake = snake;
-  this.__meta = __meta;
-  this.__extmap = __extmap;
-  this.cljs$lang$protocol_mask$partition1$ = 0;
-  this.cljs$lang$protocol_mask$partition0$ = 2229667594;
-  if(arguments.length > 6) {
-    this.__meta = __meta;
-    this.__extmap = __extmap
-  }else {
-    this.__meta = null;
-    this.__extmap = null
-  }
-};
-snake.core.game_record.prototype.cljs$core$IHash$_hash$arity$1 = function(this__2467__auto__) {
-  var self__ = this;
-  var h__2335__auto__ = self__.__hash;
-  if(!(h__2335__auto__ == null)) {
-    return h__2335__auto__
-  }else {
-    var h__2335__auto____$1 = cljs.core.hash_imap.call(null, this__2467__auto__);
-    self__.__hash = h__2335__auto____$1;
-    return h__2335__auto____$1
-  }
-};
-snake.core.game_record.prototype.cljs$core$ILookup$_lookup$arity$2 = function(this__2472__auto__, k__2473__auto__) {
-  var self__ = this;
-  return this__2472__auto__.cljs$core$ILookup$_lookup$arity$3(this__2472__auto__, k__2473__auto__, null)
-};
-snake.core.game_record.prototype.cljs$core$ILookup$_lookup$arity$3 = function(this__2474__auto__, k2957, else__2475__auto__) {
-  var self__ = this;
-  if(k2957 === "\ufdd0:panel") {
-    return self__.panel
-  }else {
-    if(k2957 === "\ufdd0:cell-size") {
-      return self__.cell_size
-    }else {
-      if(k2957 === "\ufdd0:length-to-win") {
-        return self__.length_to_win
-      }else {
-        if(k2957 === "\ufdd0:ms-per-move") {
-          return self__.ms_per_move
-        }else {
-          if(k2957 === "\ufdd0:apple") {
-            return self__.apple
-          }else {
-            if(k2957 === "\ufdd0:snake") {
-              return self__.snake
-            }else {
-              if("\ufdd0:else") {
-                return cljs.core._lookup.call(null, self__.__extmap, k2957, else__2475__auto__)
-              }else {
-                return null
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-};
-snake.core.game_record.prototype.cljs$core$IAssociative$_assoc$arity$3 = function(this__2479__auto__, k__2480__auto__, G__2956) {
-  var self__ = this;
-  var pred__2959 = cljs.core.identical_QMARK_;
-  var expr__2960 = k__2480__auto__;
-  if(pred__2959.call(null, "\ufdd0:panel", expr__2960)) {
-    return new snake.core.game_record(G__2956, self__.cell_size, self__.length_to_win, self__.ms_per_move, self__.apple, self__.snake, self__.__meta, self__.__extmap, null)
-  }else {
-    if(pred__2959.call(null, "\ufdd0:cell-size", expr__2960)) {
-      return new snake.core.game_record(self__.panel, G__2956, self__.length_to_win, self__.ms_per_move, self__.apple, self__.snake, self__.__meta, self__.__extmap, null)
-    }else {
-      if(pred__2959.call(null, "\ufdd0:length-to-win", expr__2960)) {
-        return new snake.core.game_record(self__.panel, self__.cell_size, G__2956, self__.ms_per_move, self__.apple, self__.snake, self__.__meta, self__.__extmap, null)
-      }else {
-        if(pred__2959.call(null, "\ufdd0:ms-per-move", expr__2960)) {
-          return new snake.core.game_record(self__.panel, self__.cell_size, self__.length_to_win, G__2956, self__.apple, self__.snake, self__.__meta, self__.__extmap, null)
-        }else {
-          if(pred__2959.call(null, "\ufdd0:apple", expr__2960)) {
-            return new snake.core.game_record(self__.panel, self__.cell_size, self__.length_to_win, self__.ms_per_move, G__2956, self__.snake, self__.__meta, self__.__extmap, null)
-          }else {
-            if(pred__2959.call(null, "\ufdd0:snake", expr__2960)) {
-              return new snake.core.game_record(self__.panel, self__.cell_size, self__.length_to_win, self__.ms_per_move, self__.apple, G__2956, self__.__meta, self__.__extmap, null)
-            }else {
-              return new snake.core.game_record(self__.panel, self__.cell_size, self__.length_to_win, self__.ms_per_move, self__.apple, self__.snake, self__.__meta, cljs.core.assoc.call(null, self__.__extmap, k__2480__auto__, G__2956), null)
-            }
-          }
-        }
-      }
-    }
-  }
-};
-snake.core.game_record.prototype.cljs$core$IPrintWithWriter$_pr_writer$arity$3 = function(this__2486__auto__, writer__2487__auto__, opts__2488__auto__) {
-  var self__ = this;
-  var pr_pair__2489__auto__ = function(keyval__2490__auto__) {
-    return cljs.core.pr_sequential_writer.call(null, writer__2487__auto__, cljs.core.pr_writer, "", " ", "", opts__2488__auto__, keyval__2490__auto__)
+  sched.cljs$lang$maxFixedArity = 0;
+  sched.cljs$lang$applyTo = function(arglist__2945) {
+    var fns = cljs.core.seq(arglist__2945);
+    return sched__delegate(fns)
   };
-  return cljs.core.pr_sequential_writer.call(null, writer__2487__auto__, pr_pair__2489__auto__, [cljs.core.str("#"), cljs.core.str("game-record"), cljs.core.str("{")].join(""), ", ", "}", opts__2488__auto__, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0:panel", self__.panel), cljs.core.vector.call(null, "\ufdd0:cell-size", self__.cell_size), cljs.core.vector.call(null, "\ufdd0:length-to-win", self__.length_to_win), cljs.core.vector.call(null, 
-  "\ufdd0:ms-per-move", self__.ms_per_move), cljs.core.vector.call(null, "\ufdd0:apple", self__.apple), cljs.core.vector.call(null, "\ufdd0:snake", self__.snake)], true), self__.__extmap))
-};
-snake.core.game_record.prototype.cljs$core$ICollection$_conj$arity$2 = function(this__2477__auto__, entry__2478__auto__) {
-  var self__ = this;
-  if(cljs.core.vector_QMARK_.call(null, entry__2478__auto__)) {
-    return this__2477__auto__.cljs$core$IAssociative$_assoc$arity$3(this__2477__auto__, cljs.core._nth.call(null, entry__2478__auto__, 0), cljs.core._nth.call(null, entry__2478__auto__, 1))
-  }else {
-    return cljs.core.reduce.call(null, cljs.core._conj, this__2477__auto__, entry__2478__auto__)
-  }
-};
-snake.core.game_record.prototype.cljs$core$ISeqable$_seq$arity$1 = function(this__2484__auto__) {
-  var self__ = this;
-  return cljs.core.seq.call(null, cljs.core.concat.call(null, cljs.core.PersistentVector.fromArray([cljs.core.vector.call(null, "\ufdd0:panel", self__.panel), cljs.core.vector.call(null, "\ufdd0:cell-size", self__.cell_size), cljs.core.vector.call(null, "\ufdd0:length-to-win", self__.length_to_win), cljs.core.vector.call(null, "\ufdd0:ms-per-move", self__.ms_per_move), cljs.core.vector.call(null, "\ufdd0:apple", self__.apple), cljs.core.vector.call(null, "\ufdd0:snake", self__.snake)], true), self__.__extmap))
-};
-snake.core.game_record.prototype.cljs$core$ICounted$_count$arity$1 = function(this__2476__auto__) {
-  var self__ = this;
-  return 6 + cljs.core.count.call(null, self__.__extmap)
-};
-snake.core.game_record.prototype.cljs$core$IEquiv$_equiv$arity$2 = function(this__2468__auto__, other__2469__auto__) {
-  var self__ = this;
-  if(cljs.core.truth_(function() {
-    var and__3941__auto__ = other__2469__auto__;
-    if(cljs.core.truth_(and__3941__auto__)) {
-      var and__3941__auto____$1 = this__2468__auto__.constructor === other__2469__auto__.constructor;
-      if(and__3941__auto____$1) {
-        return cljs.core.equiv_map.call(null, this__2468__auto__, other__2469__auto__)
-      }else {
-        return and__3941__auto____$1
-      }
-    }else {
-      return and__3941__auto__
-    }
-  }())) {
-    return true
-  }else {
-    return false
-  }
-};
-snake.core.game_record.prototype.cljs$core$IWithMeta$_with_meta$arity$2 = function(this__2471__auto__, G__2956) {
-  var self__ = this;
-  return new snake.core.game_record(self__.panel, self__.cell_size, self__.length_to_win, self__.ms_per_move, self__.apple, self__.snake, G__2956, self__.__extmap, self__.__hash)
-};
-snake.core.game_record.prototype.cljs$core$IMeta$_meta$arity$1 = function(this__2470__auto__) {
-  var self__ = this;
-  return self__.__meta
-};
-snake.core.game_record.prototype.cljs$core$IMap$_dissoc$arity$2 = function(this__2481__auto__, k__2482__auto__) {
-  var self__ = this;
-  if(cljs.core.contains_QMARK_.call(null, cljs.core.PersistentHashSet.fromArray(["\ufdd0:snake", "\ufdd0:cell-size", "\ufdd0:apple", "\ufdd0:length-to-win", "\ufdd0:panel", "\ufdd0:ms-per-move"]), k__2482__auto__)) {
-    return cljs.core.dissoc.call(null, cljs.core.with_meta.call(null, cljs.core.into.call(null, cljs.core.ObjMap.EMPTY, this__2481__auto__), self__.__meta), k__2482__auto__)
-  }else {
-    return new snake.core.game_record(self__.panel, self__.cell_size, self__.length_to_win, self__.ms_per_move, self__.apple, self__.snake, self__.__meta, cljs.core.not_empty.call(null, cljs.core.dissoc.call(null, self__.__extmap, k__2482__auto__)), null)
-  }
-};
-snake.core.game_record.cljs$lang$type = true;
-snake.core.game_record.cljs$lang$ctorPrSeq = function(this__2507__auto__) {
-  return cljs.core.list.call(null, "snake.core/game-record")
-};
-snake.core.game_record.cljs$lang$ctorPrWriter = function(this__2507__auto__, writer__2508__auto__) {
-  return cljs.core._write.call(null, writer__2508__auto__, "snake.core/game-record")
-};
-snake.core.__GT_game_record = function __GT_game_record(panel, cell_size, length_to_win, ms_per_move, apple, snake__$1) {
-  return new snake.core.game_record(panel, cell_size, length_to_win, ms_per_move, apple, snake__$1)
-};
-snake.core.map__GT_game_record = function map__GT_game_record(G__2958) {
-  return new snake.core.game_record((new cljs.core.Keyword("\ufdd0:panel")).call(null, G__2958), (new cljs.core.Keyword("\ufdd0:cell-size")).call(null, G__2958), (new cljs.core.Keyword("\ufdd0:length-to-win")).call(null, G__2958), (new cljs.core.Keyword("\ufdd0:ms-per-move")).call(null, G__2958), (new cljs.core.Keyword("\ufdd0:apple")).call(null, G__2958), (new cljs.core.Keyword("\ufdd0:snake")).call(null, G__2958), null, cljs.core.dissoc.call(null, G__2958, "\ufdd0:panel", "\ufdd0:cell-size", "\ufdd0:length-to-win", 
-  "\ufdd0:ms-per-move", "\ufdd0:apple", "\ufdd0:snake"))
-};
-snake.core.board_dimensions = function board_dimensions(panel, cell_size) {
-  var width = panel.getContext("2d").canvas.width;
-  var height = panel.getContext("2d").canvas.height;
-  return cljs.core.PersistentVector.fromArray([cljs.core.quot.call(null, width, cell_size), cljs.core.quot.call(null, height, cell_size)], true)
-};
-snake.core.create_center_cell = function create_center_cell(width, height) {
-  return new snake.core.cell_record(cljs.core.quot.call(null, width, 2), cljs.core.quot.call(null, height, 2))
-};
-snake.core.create_random_cell = function create_random_cell(width, height) {
-  return new snake.core.cell_record(cljs.core.rand_int.call(null, width - 1), cljs.core.rand_int.call(null, height - 1))
-};
-snake.core.create_snake = function create_snake(width, height) {
-  var head = snake.core.create_center_cell.call(null, width, height);
-  var body = cljs.core.list.call(null, head);
-  return new snake.core.snake_record(body, "\ufdd0:right")
-};
-snake.core.create_game = function create_game(panel, cell_size) {
-  var length_to_win = 10;
-  var ms_per_move = 100;
-  var vec__2963 = snake.core.board_dimensions.call(null, panel, cell_size);
-  var width = cljs.core.nth.call(null, vec__2963, 0, null);
-  var height = cljs.core.nth.call(null, vec__2963, 1, null);
-  var apple = snake.core.create_random_cell.call(null, width, height);
-  var snake__$1 = snake.core.create_snake.call(null, width, height);
-  return new snake.core.game_record(panel, cell_size, length_to_win, ms_per_move, apple, snake__$1)
-};
-snake.core.paint_cell = function paint_cell(panel, color, cell_size, p__2964) {
-  var map__2966 = p__2964;
-  var map__2966__$1 = cljs.core.seq_QMARK_.call(null, map__2966) ? cljs.core.apply.call(null, cljs.core.hash_map, map__2966) : map__2966;
-  var x = cljs.core._lookup.call(null, map__2966__$1, "\ufdd0:x", null);
-  var y = cljs.core._lookup.call(null, map__2966__$1, "\ufdd0:y", null);
-  var context = panel.getContext("2d");
-  context.fillStyle = cljs.core.name.call(null, color);
-  return context.fillRect(x * cell_size, y * cell_size, cell_size, cell_size)
-};
-snake.core.erase_cell = function erase_cell(game, p__2967) {
-  var map__2969 = p__2967;
-  var map__2969__$1 = cljs.core.seq_QMARK_.call(null, map__2969) ? cljs.core.apply.call(null, cljs.core.hash_map, map__2969) : map__2969;
-  var x = cljs.core._lookup.call(null, map__2969__$1, "\ufdd0:x", null);
-  var y = cljs.core._lookup.call(null, map__2969__$1, "\ufdd0:y", null);
-  var panel = (new cljs.core.Keyword("\ufdd0:panel")).call(null, game);
-  var context = panel.getContext("2d");
-  var cell_size = (new cljs.core.Keyword("\ufdd0:cell-size")).call(null, game);
-  return context.clearRect(x * cell_size, y * cell_size, cell_size, cell_size)
-};
-snake.core.erase_apple = function erase_apple(game) {
-  var apple = (new cljs.core.Keyword("\ufdd0:apple")).call(null, game);
-  return snake.core.erase_cell.call(null, game, apple)
-};
-snake.core.erase_snake = function erase_snake(game) {
-  var G__2971 = cljs.core.seq.call(null, (new cljs.core.Keyword("\ufdd0:body")).call(null, (new cljs.core.Keyword("\ufdd0:snake")).call(null, game)));
-  while(true) {
-    if(G__2971) {
-      var cell = cljs.core.first.call(null, G__2971);
-      snake.core.erase_cell.call(null, game, cell);
-      var G__2972 = cljs.core.next.call(null, G__2971);
-      G__2971 = G__2972;
-      continue
+  sched.cljs$lang$arity$variadic = sched__delegate;
+  return sched
+}();
+hanoi.stack.simulation_loop = function() {
+  var simulation_loop = null;
+  var simulation_loop__0 = function() {
+    var temp__4090__auto__ = cljs.core.first.call(null, cljs.core.deref.call(null, hanoi.stack.stack));
+    if(cljs.core.truth_(temp__4090__auto__)) {
+      var f = temp__4090__auto__;
+      console.log([cljs.core.str(cljs.core.deref.call(null, hanoi.stack.stack))].join(""));
+      cljs.core.swap_BANG_.call(null, hanoi.stack.stack, cljs.core.rest);
+      f.call(null);
+      return setTimeout(simulation_loop, 1E3)
     }else {
       return null
     }
-    break
-  }
-};
-snake.core.paint_apple = function paint_apple(panel, cell_size, apple) {
-  return snake.core.paint_cell.call(null, panel, "\ufdd0:red", cell_size, apple)
-};
-snake.core.paint_snake = function paint_snake(panel, cell_size, snake__$1) {
-  var head = cljs.core.first.call(null, (new cljs.core.Keyword("\ufdd0:body")).call(null, snake__$1));
-  return snake.core.paint_cell.call(null, panel, "\ufdd0:blue", cell_size, head)
-};
-snake.core.paint_game = function paint_game(game) {
-  var panel = (new cljs.core.Keyword("\ufdd0:panel")).call(null, game);
-  var cell_size = (new cljs.core.Keyword("\ufdd0:cell-size")).call(null, game);
-  snake.core.paint_apple.call(null, panel, cell_size, (new cljs.core.Keyword("\ufdd0:apple")).call(null, game));
-  return snake.core.paint_snake.call(null, panel, cell_size, (new cljs.core.Keyword("\ufdd0:snake")).call(null, game))
-};
-snake.core.new_apple = function new_apple(game) {
-  var panel = (new cljs.core.Keyword("\ufdd0:panel")).call(null, game);
-  var cell_size = (new cljs.core.Keyword("\ufdd0:cell-size")).call(null, game);
-  var vec__2974 = snake.core.board_dimensions.call(null, panel, cell_size);
-  var width = cljs.core.nth.call(null, vec__2974, 0, null);
-  var height = cljs.core.nth.call(null, vec__2974, 1, null);
-  snake.core.erase_apple.call(null, game);
-  return snake.core.create_random_cell.call(null, width, height)
-};
-snake.core.delta = function delta(direction) {
-  return direction.call(null, cljs.core.ObjMap.fromObject(["\ufdd0:left", "\ufdd0:right", "\ufdd0:up", "\ufdd0:down"], {"\ufdd0:left":cljs.core.PersistentVector.fromArray([-1, 0], true), "\ufdd0:right":cljs.core.PersistentVector.fromArray([1, 0], true), "\ufdd0:up":cljs.core.PersistentVector.fromArray([0, -1], true), "\ufdd0:down":cljs.core.PersistentVector.fromArray([0, 1], true)}))
-};
-snake.core.new_direction = function new_direction(game) {
-  var snake__$1 = (new cljs.core.Keyword("\ufdd0:snake")).call(null, game);
-  var direction = (new cljs.core.Keyword("\ufdd0:direction")).call(null, snake__$1);
-  var head = cljs.core.first.call(null, (new cljs.core.Keyword("\ufdd0:body")).call(null, snake__$1));
-  var x = (new cljs.core.Keyword("\ufdd0:x")).call(null, head);
-  var y = (new cljs.core.Keyword("\ufdd0:y")).call(null, head);
-  var panel = (new cljs.core.Keyword("\ufdd0:panel")).call(null, game);
-  var cell_size = (new cljs.core.Keyword("\ufdd0:cell-size")).call(null, game);
-  var vec__2976 = snake.core.board_dimensions.call(null, panel, cell_size);
-  var width = cljs.core.nth.call(null, vec__2976, 0, null);
-  var height = cljs.core.nth.call(null, vec__2976, 1, null);
-  var at_left = x === 0;
-  var at_right = x === width - 1;
-  var at_top = y === 0;
-  var at_bottom = y === height - 1;
-  if(cljs.core.truth_(function() {
-    var and__3941__auto__ = cljs.core._EQ_.call(null, direction, "\ufdd0:up");
-    if(and__3941__auto__) {
-      return at_top
-    }else {
-      return and__3941__auto__
+  };
+  var simulation_loop__1 = function(start_fn) {
+    hanoi.stack.sched.call(null, start_fn);
+    return simulation_loop.call(null)
+  };
+  simulation_loop = function(start_fn) {
+    switch(arguments.length) {
+      case 0:
+        return simulation_loop__0.call(this);
+      case 1:
+        return simulation_loop__1.call(this, start_fn)
     }
-  }())) {
-    if(at_right) {
-      return"\ufdd0:left"
-    }else {
-      return"\ufdd0:right"
-    }
+    throw new Error("Invalid arity: " + arguments.length);
+  };
+  simulation_loop.cljs$lang$arity$0 = simulation_loop__0;
+  simulation_loop.cljs$lang$arity$1 = simulation_loop__1;
+  return simulation_loop
+}();
+goog.provide("hanoi.core");
+goog.require("cljs.core");
+goog.require("hanoi.repl");
+goog.require("hanoi.stack");
+goog.require("hanoi.stack");
+goog.require("hanoi.repl");
+hanoi.core.say_hello = function say_hello() {
+  return alert("Hello from cljs-hanoi!")
+};
+goog.exportSymbol("hanoi.core.say_hello", hanoi.core.say_hello);
+hanoi.core.draw_state_BANG_ = function draw_state_BANG_(key, ref, old, new$) {
+  return cljs.core.doall.call(null, cljs.core.map.call(null, function(p1__2944_SHARP_) {
+    return document.getElementById(cljs.core.name.call(null, p1__2944_SHARP_)).innerHTML = cljs.core.apply.call(null, cljs.core.str, cljs.core.map.call(null, function(e) {
+      return crate.html.call(null, cljs.core.PersistentVector.fromArray(["\ufdd0:div", cljs.core.ObjMap.fromObject(["\ufdd0:style"], {"\ufdd0:style":cljs.core.ObjMap.fromObject(["\ufdd0:width", "\ufdd0:height", "\ufdd0:margin", "\ufdd0:background-color"], {"\ufdd0:width":[cljs.core.str(20 * e), cljs.core.str("px")].join(""), "\ufdd0:height":"10px", "\ufdd0:margin":"0 auto", "\ufdd0:background-color":"red"})})], true)).outerHTML
+    }, p1__2944_SHARP_.call(null, new$)))
+  }, cljs.core.keys.call(null, new$)))
+};
+hanoi.core.some_towers = cljs.core.atom.call(null, cljs.core.ObjMap.EMPTY);
+hanoi.core.init = function init() {
+  return cljs.core.swap_BANG_.call(null, hanoi.core.some_towers, function() {
+    return cljs.core.ObjMap.fromObject(["\ufdd0:A", "\ufdd0:B", "\ufdd0:C"], {"\ufdd0:A":cljs.core.with_meta(cljs.core.list(1, 2, 3, 4, 5, 6), cljs.core.hash_map("\ufdd0:line", 36, "\ufdd0:column", 34)), "\ufdd0:B":cljs.core.List.EMPTY, "\ufdd0:C":cljs.core.List.EMPTY})
+  })
+};
+hanoi.core.move_plate_BANG_ = function move_plate_BANG_(towers, from, to) {
+  return cljs.core.swap_BANG_.call(null, towers, function(p1__2945_SHARP_) {
+    return cljs.core.assoc.call(null, p1__2945_SHARP_, to, cljs.core.cons.call(null, cljs.core.first.call(null, from.call(null, p1__2945_SHARP_)), to.call(null, p1__2945_SHARP_)), from, cljs.core.rest.call(null, from.call(null, p1__2945_SHARP_)))
+  })
+};
+cljs.core.add_watch.call(null, hanoi.core.some_towers, "\ufdd0:draw", hanoi.core.draw_state_BANG_);
+hanoi.core.thanoi = function thanoi(height, towers, A, B, C) {
+  if(height === 1) {
+    return hanoi.stack.sched.call(null, function() {
+      return hanoi.core.move_plate_BANG_.call(null, towers, A, C)
+    })
   }else {
-    if(cljs.core.truth_(function() {
-      var and__3941__auto__ = cljs.core._EQ_.call(null, direction, "\ufdd0:right");
-      if(and__3941__auto__) {
-        return at_right
-      }else {
-        return and__3941__auto__
-      }
-    }())) {
-      if(at_bottom) {
-        return"\ufdd0:up"
-      }else {
-        return"\ufdd0:down"
-      }
-    }else {
-      if(cljs.core.truth_(function() {
-        var and__3941__auto__ = cljs.core._EQ_.call(null, direction, "\ufdd0:down");
-        if(and__3941__auto__) {
-          return at_bottom
-        }else {
-          return and__3941__auto__
-        }
-      }())) {
-        if(at_left) {
-          return"\ufdd0:right"
-        }else {
-          return"\ufdd0:left"
-        }
-      }else {
-        if(cljs.core.truth_(function() {
-          var and__3941__auto__ = cljs.core._EQ_.call(null, direction, "\ufdd0:left");
-          if(and__3941__auto__) {
-            return at_left
-          }else {
-            return and__3941__auto__
-          }
-        }())) {
-          if(at_top) {
-            return"\ufdd0:down"
-          }else {
-            return"\ufdd0:up"
-          }
-        }else {
-          if(true) {
-            return direction
-          }else {
-            return null
-          }
-        }
-      }
-    }
+    return hanoi.stack.sched.call(null, function() {
+      return thanoi.call(null, height - 1, towers, A, C, B)
+    }, function() {
+      return hanoi.core.move_plate_BANG_.call(null, towers, A, C)
+    }, function() {
+      return thanoi.call(null, height - 1, towers, B, A, C)
+    })
   }
 };
-snake.core.same_or_adjacent_cell_QMARK_ = function same_or_adjacent_cell_QMARK_(cell1, cell2) {
-  var dx = Math.abs((new cljs.core.Keyword("\ufdd0:x")).call(null, cell1) - (new cljs.core.Keyword("\ufdd0:x")).call(null, cell2));
-  var dy = Math.abs((new cljs.core.Keyword("\ufdd0:y")).call(null, cell1) - (new cljs.core.Keyword("\ufdd0:y")).call(null, cell2));
-  var and__3941__auto__ = dx <= 1;
-  if(and__3941__auto__) {
-    return dy <= 1
-  }else {
-    return and__3941__auto__
-  }
-};
-snake.core.eat_apple_QMARK_ = function eat_apple_QMARK_(game) {
-  var apple = (new cljs.core.Keyword("\ufdd0:apple")).call(null, game);
-  var snake__$1 = (new cljs.core.Keyword("\ufdd0:snake")).call(null, game);
-  var head = cljs.core.first.call(null, (new cljs.core.Keyword("\ufdd0:body")).call(null, snake__$1));
-  return snake.core.same_or_adjacent_cell_QMARK_.call(null, head, apple)
-};
-snake.core.remove_tail = function remove_tail(game, body) {
-  var tail = cljs.core.last.call(null, body);
-  snake.core.erase_cell.call(null, game, tail);
-  return cljs.core.butlast.call(null, body)
-};
-snake.core.move_snake = function move_snake(game, grow) {
-  var direction = snake.core.new_direction.call(null, game);
-  var vec__2978 = snake.core.delta.call(null, direction);
-  var dx = cljs.core.nth.call(null, vec__2978, 0, null);
-  var dy = cljs.core.nth.call(null, vec__2978, 1, null);
-  var snake__$1 = (new cljs.core.Keyword("\ufdd0:snake")).call(null, game);
-  var body = (new cljs.core.Keyword("\ufdd0:body")).call(null, snake__$1);
-  var head = cljs.core.first.call(null, body);
-  var x = (new cljs.core.Keyword("\ufdd0:x")).call(null, head);
-  var y = (new cljs.core.Keyword("\ufdd0:y")).call(null, head);
-  var new_head = new snake.core.cell_record(x + dx, y + dy);
-  var body__$1 = cljs.core.cons.call(null, new_head, body);
-  var body__$2 = cljs.core.truth_(grow) ? body__$1 : snake.core.remove_tail.call(null, game, body__$1);
-  return new snake.core.snake_record(body__$2, direction)
-};
-snake.core.get_key_direction = function get_key_direction(key_code) {
-  if(cljs.core._EQ_.call(null, key_code, 37)) {
-    return"\ufdd0:left"
-  }else {
-    if(cljs.core._EQ_.call(null, key_code, 39)) {
-      return"\ufdd0:right"
-    }else {
-      if(cljs.core._EQ_.call(null, key_code, 38)) {
-        return"\ufdd0:up"
-      }else {
-        if(cljs.core._EQ_.call(null, key_code, 40)) {
-          return"\ufdd0:down"
-        }else {
-          if(true) {
-            return null
-          }else {
-            return null
-          }
-        }
-      }
-    }
-  }
-};
-snake.core.snake_with_key_direction = function snake_with_key_direction(snake__$1, key_code_atom) {
-  var key_code = cljs.core.deref.call(null, key_code_atom);
-  var key_direction = snake.core.get_key_direction.call(null, key_code);
-  var current = (new cljs.core.Keyword("\ufdd0:direction")).call(null, snake__$1);
-  var valid_change = cljs.core._EQ_.call(null, key_direction, null) ? false : cljs.core._EQ_.call(null, key_direction, "\ufdd0:left") ? cljs.core.not_EQ_.call(null, current, "\ufdd0:right") : cljs.core._EQ_.call(null, key_direction, "\ufdd0:right") ? cljs.core.not_EQ_.call(null, current, "\ufdd0:left") : cljs.core._EQ_.call(null, key_direction, "\ufdd0:up") ? cljs.core.not_EQ_.call(null, current, "\ufdd0:down") : cljs.core._EQ_.call(null, key_direction, "\ufdd0:down") ? cljs.core.not_EQ_.call(null, 
-  current, "\ufdd0:up") : true ? true : null;
-  if(cljs.core.truth_(valid_change)) {
-    cljs.core.compare_and_set_BANG_.call(null, key_code_atom, key_code, null);
-    return cljs.core.assoc.call(null, snake__$1, "\ufdd0:direction", key_direction)
-  }else {
-    return snake__$1
-  }
-};
-snake.core.head_overlaps_body_QMARK_ = function head_overlaps_body_QMARK_(body) {
-  var head = cljs.core.first.call(null, body);
-  return cljs.core.some.call(null, function(p1__2979_SHARP_) {
-    return cljs.core._EQ_.call(null, p1__2979_SHARP_, head)
-  }, cljs.core.rest.call(null, body))
-};
-snake.core.restart_game = function restart_game(game) {
-  snake.core.erase_apple.call(null, game);
-  snake.core.erase_snake.call(null, game);
-  return snake.core.create_game.call(null, (new cljs.core.Keyword("\ufdd0:panel")).call(null, game), (new cljs.core.Keyword("\ufdd0:cell-size")).call(null, game))
-};
-snake.core.new_game = function new_game(game, message) {
-  var panel = (new cljs.core.Keyword("\ufdd0:panel")).call(null, game);
-  alert(message);
-  return snake.core.restart_game.call(null, game)
-};
-snake.core.win_QMARK_ = function win_QMARK_(game) {
-  var snake__$1 = (new cljs.core.Keyword("\ufdd0:snake")).call(null, game);
-  var body = (new cljs.core.Keyword("\ufdd0:body")).call(null, snake__$1);
-  return cljs.core._EQ_.call(null, cljs.core.count.call(null, body), (new cljs.core.Keyword("\ufdd0:length-to-win")).call(null, game))
-};
-snake.core.lose_QMARK_ = function lose_QMARK_(game) {
-  var snake__$1 = (new cljs.core.Keyword("\ufdd0:snake")).call(null, game);
-  var body = (new cljs.core.Keyword("\ufdd0:body")).call(null, snake__$1);
-  return snake.core.head_overlaps_body_QMARK_.call(null, body)
-};
-snake.core.step = function step(game, key_code_atom) {
-  var eat = snake.core.eat_apple_QMARK_.call(null, game);
-  var snake__$1 = snake.core.snake_with_key_direction.call(null, (new cljs.core.Keyword("\ufdd0:snake")).call(null, game), key_code_atom);
-  var game__$1 = cljs.core.assoc.call(null, game, "\ufdd0:snake", snake__$1);
-  var game__$2 = cljs.core.truth_(eat) ? cljs.core.assoc.call(null, game__$1, "\ufdd0:apple", snake.core.new_apple.call(null, game__$1)) : game__$1;
-  var snake__$2 = snake.core.move_snake.call(null, game__$2, eat);
-  if(cljs.core.truth_(snake.core.lose_QMARK_.call(null, game__$2))) {
-    return snake.core.new_game.call(null, game__$2, "You killed the snake!")
-  }else {
-    if(cljs.core.truth_(snake.core.win_QMARK_.call(null, game__$2))) {
-      return snake.core.new_game.call(null, game__$2, "You win!")
-    }else {
-      if("\ufdd0:else") {
-        return cljs.core.assoc.call(null, game__$2, "\ufdd0:snake", snake__$2)
-      }else {
-        return null
-      }
-    }
-  }
-};
-snake.core.create_panel = function create_panel(width, height, key_code_atom) {
-  var panel = document.getElementById(snake.core.panel_canvas_id);
-  var context = panel.getContext("2d");
-  document.addEventListener("keyup", function(e) {
-    return cljs.core.compare_and_set_BANG_.call(null, key_code_atom, cljs.core.deref.call(null, key_code_atom), e.keyCode)
-  });
-  return panel
-};
-snake.core.configure_gui = function configure_gui(panel) {
-  return null
-};
-snake.core.game_loop = function game_loop(game, key_code_atom) {
-  snake.core.paint_game.call(null, game);
-  return setTimeout(function() {
-    return game_loop.call(null, snake.core.step.call(null, game, key_code_atom), key_code_atom)
-  }, (new cljs.core.Keyword("\ufdd0:ms-per-move")).call(null, game))
-};
-var width_2980 = 20;
-var height_2981 = 20;
-var cell_size_2982 = 10;
-var key_code_atom_2983 = cljs.core.atom.call(null, null);
-var panel_width_2984 = width_2980 * cell_size_2982;
-var panel_height_2985 = height_2981 * cell_size_2982;
-var panel_2986 = snake.core.create_panel.call(null, panel_width_2984, panel_height_2985, key_code_atom_2983);
-var first_game_2987 = snake.core.create_game.call(null, panel_2986, cell_size_2982);
-snake.core.configure_gui.call(null, panel_2986);
-snake.core.game_loop.call(null, first_game_2987, key_code_atom_2983);
